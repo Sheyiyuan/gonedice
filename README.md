@@ -2,7 +2,7 @@
 
 这是一个 onedice 标准的 go 实现。
 
-如果你不知道 onedice 是什么，请点击 [这里]() 查看。
+如果你不知道 onedice 是什么，请点击 [这里](https://github.com/OlivOS-Team/onedice) 查看。
 
 ## 快速 API
 

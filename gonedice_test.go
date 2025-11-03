@@ -1,4 +1,4 @@
-package onedice
+package gonedice
 
 import (
     "math/rand"

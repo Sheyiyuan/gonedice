@@ -1,8 +1,6 @@
 # gonedice
 
-这是一个 onedice 标准的 go 实现。
-
-如果你不知道 onedice 是什么，请点击 [这里](https://github.com/OlivOS-Team/onedice) 查看。
+这是一个 [OneDice](https://github.com/OlivOS-Team/onedice) 标准的 golang 实现。
 
 ## 快速 API
 
@@ -21,7 +19,7 @@
 `RD` 结构中可直接访问的便利点：
 
 - `r.rng` — 随机数生成器；你可以替换为 `rand.New(rand.NewSource(seed))` 以获得确定性输出（便于测试）。
-- `r.ValueTable` — 全局/传入的变量表（键通常为大写或 `Tn` 风格）。
+- `r.ValueTable` — 全局/传入的变量表。
 
 ## 使用示例（完整）
 
@@ -32,13 +30,13 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/Sheyiyuan/onedice/onedice"
+	"github.com/Sheyiyuan/onedice"
 )
 
 func main() {
 	// 简单骰子示例
 	r := onedice.New("2d6k1", nil)
-	r.rng = rand.New(rand.NewSource(42)) // 可选：确定性测试
+	r.rng = rand.New(rand.NewSource(114514)) // 可选：确定性测试
 	r.Roll()
 	res := r.Result()
 	fmt.Println("Value:", res.Value)
@@ -78,7 +76,7 @@ for _, el := range res.MetaTuple {
 
 ## 临时变量 `$t` 与 ValueTable 的交互
 
-- 读取 `$t` 时优先使用 `r.temp`；若未设置再查 `r.ValueTable["Tn"]`（支持大写键）。
+- 读取 `$t` 时优先使用 `r.temp`；若未设置再查 `r.ValueTable["Tn"]`。
 - 赋值操作 `=` 会同时写入 `r.temp` 与 `r.ValueTable["Tn"]`，这样子表达式中读取 `$t` 可以看到父级写入的值。
 
 ## 确定性测试（控制 RNG）
@@ -86,7 +84,7 @@ for _, el := range res.MetaTuple {
 在测试或示例中，你可以替换 `r.rng` 以得到可重复的输出：
 
 ```go
-r.rng = rand.New(rand.NewSource(12345))
+r.rng = rand.New(rand.NewSource(114514))
 ```
 
 单元测试中大量使用此手法断言结果。

@@ -2,6 +2,8 @@
 
 这是一个 onedice 标准的 go 实现。
 
+如果你不知道 onedice 是什么，请点击 [这里]() 查看。
+
 ## 快速 API
 
 - `func New(expr string, valueTable map[string]int) *RD` —  创建解析器实例；`valueTable` 可用于传入预设变量（键通常为大写）。
@@ -20,17 +22,6 @@
 
 - `r.rng` — 随机数生成器；你可以替换为 `rand.New(rand.NewSource(seed))` 以获得确定性输出（便于测试）。
 - `r.ValueTable` — 全局/传入的变量表（键通常为大写或 `Tn` 风格）。
-
-## 典型表达式与语义
-
-- 算术：`1+2*3` -> 7
-- 掷骰：`2d6` -> 两个 1..6 的骰子之和（`MetaTuple` 包含各骰子值）
-- 保留最高：`4d6kh3` -> 掷 4 个骰子，取最高 3 个
-- 三元短路：`cond ? trueExpr : falseExpr` — 仅评估被选分支（短路，从而避免未选分支的副作用或错误）
-- 临时变量与赋值：`$t=7+$t` — `$t` 支持读取和赋值；实现会把 `$t` 写入 `r.temp` 并同步到 `r.ValueTable["Tn"]`（便于跨子表达式可见）
-- lp 字符串模板：`"x{i}y"lp2` -> `MetaTuple` 为 `["x1y","x2y"]`（占位符 `{i}` 从 1 开始）
-
-注意：表达式语法支持多类运算符（详见源码中的 `prec` 表）：常见有 `d`, `k`, `q`, `a`, `c`, `b`, `p`, `kh`, `kl`, `dh`, `dl`, `min`, `max`, `sp`, `tp`, `lp`, `f`（`df` 为 `f` 别名）等。
 
 ## 使用示例（完整）
 
